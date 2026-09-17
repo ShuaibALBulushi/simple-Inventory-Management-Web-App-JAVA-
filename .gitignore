@@ -1,26 +1,27 @@
-# Maven target directory (compiled classes, JARs, build artifacts)
+# Environment & Secrets (CRITICAL)
+.env
+*.env
+
+# Maven Build Output
 target/
-
-# Compiled class files
 *.class
+*.jar
+*.war
+*.ear
 
-# Log files
-*.log
-
-# IDE & Editor files
+# IDE & Editor Files
 .vscode/
 .idea/
 *.iml
-*.classpath
-*.project
+.classpath
+.project
 .settings/
+*.factorypath
 
-# Windows OS metadata
+# OS Generated Files
+[Dd]esktop.ini
 Thumbs.db
-Desktop.ini
+.DS_Store
 
-# Crash logs
-hs_err_pid*
-replay_pid*
-
-.env
+# Logs
+*.log
