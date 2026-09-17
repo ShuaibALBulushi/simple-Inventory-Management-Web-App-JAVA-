@@ -15,3 +15,9 @@ CREATE TABLE inventory (
     product_id INT NOT NULL UNIQUE CONSTRAINT FK_inventory_products REFERENCES products(id),
     quantity INT NOT NULL DEFAULT 0
 );
+
+CREATE TABLE orders (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    order_date DATETIME2 DEFAULT GETUTCDATE(),
+    status NVARCHAR(20) NOT NULL DEFAULT 'PENDING'
+);
