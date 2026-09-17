@@ -21,3 +21,11 @@ CREATE TABLE orders (
     order_date DATETIME2 DEFAULT GETUTCDATE(),
     status NVARCHAR(20) NOT NULL DEFAULT 'PENDING'
 );
+
+CREATE TABLE order_items (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    order_id INT NOT NULL CONSTRAINT FK_orderitems_orders REFERENCES orders(id),
+    product_id INT NOT NULL CONSTRAINT FK_orderitems_products REFERENCES products(id),
+    quantity INT NOT NULL,
+    unit_price DECIMAL(10,2) NOT NULL
+);
