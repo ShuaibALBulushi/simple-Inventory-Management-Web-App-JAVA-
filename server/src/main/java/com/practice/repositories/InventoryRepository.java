@@ -31,4 +31,13 @@ public class InventoryRepository {
                       i.get(QUANTITY)
                   ));
     }
+
+    // add a new inventory item
+    public Integer addInventory(Inventory inventory) {
+        return dsl.insertInto(INVENTORY)
+                  .columns(PRODUCT_ID, QUANTITY)
+                  .values(inventory.productId(), inventory.quantity())
+                  .returningResult(ID)
+                  .fetchOneInto(Integer.class);
+    }
 }
