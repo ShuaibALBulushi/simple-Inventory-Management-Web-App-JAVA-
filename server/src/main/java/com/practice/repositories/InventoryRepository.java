@@ -40,4 +40,14 @@ public class InventoryRepository {
                   .returningResult(ID)
                   .fetchOneInto(Integer.class);
     }
+
+    // update an inventory item
+    public boolean updateInventory(Inventory inventory) {
+        int updatedRows = dsl.update(INVENTORY)
+                             .set(PRODUCT_ID, inventory.productId())
+                             .set(QUANTITY, inventory.quantity())
+                             .where(ID.eq(inventory.id()))
+                             .execute();
+        return updatedRows > 0;
+    }
 }
