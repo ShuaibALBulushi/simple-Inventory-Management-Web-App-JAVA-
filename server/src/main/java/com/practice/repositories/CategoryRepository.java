@@ -39,4 +39,13 @@ public class CategoryRepository {
                   .returningResult(ID)
                   .fetchOneInto(Integer.class);
     }
+
+    // update a category
+    public boolean updateCategory(Category category){
+        int updated = dsl.update(CATEGORIES)
+                         .set(NAME, category.name())
+                         .where(ID.eq(category.id()))
+                         .execute();
+        return updated > 0;
+    }
 }
