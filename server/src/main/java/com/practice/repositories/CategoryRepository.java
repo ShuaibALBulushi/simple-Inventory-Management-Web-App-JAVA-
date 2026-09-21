@@ -19,4 +19,15 @@ public class CategoryRepository {
     private static final Table<Record> CATEGORIES = table("categories");
     private static final Field<Integer> ID = field("id", Integer.class);
     private static final Field<String> NAME = field("name", String.class);
+
+
+    // find all categories
+    public List<Category> findAll(){
+        return dsl.select(ID, NAME)
+                  .from(CATEGORIES)
+                  .fetch(c -> new Category(
+                    c.get(ID),
+                    c.get(NAME)
+                  ));
+    }
 }
