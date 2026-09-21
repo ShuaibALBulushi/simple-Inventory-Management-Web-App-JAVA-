@@ -58,4 +58,12 @@ public class ProductRepository {
         return updatedRows > 0;
 
     }
+
+    // delete a product
+    public boolean deleteProduct(int id){
+        int deleted = dsl.deleteFrom(PRODUCTS)
+                         .where(ID.eq(id))
+                         .execute();
+        return deleted > 0;
+    }
 }
