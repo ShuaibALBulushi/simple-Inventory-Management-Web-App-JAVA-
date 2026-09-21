@@ -40,4 +40,13 @@ public class OrderRepository {
                   .returningResult(ID)
                   .fetchOneInto(Integer.class);
     }
+
+    // update an order
+    public boolean updateOrder(Order order) {
+        int updatedRows = dsl.update(ORDERS)
+                             .set(STATUS, order.status())
+                             .where(ID.eq(order.id()))
+                             .execute();
+        return updatedRows > 0;
+    }
 }
