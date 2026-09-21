@@ -24,4 +24,16 @@ public class ProductRepository {
     private static final Field<Integer> CATEGORY_ID = field("category_id", Integer.class);
     private static final Field<String> NAME = field("name", String.class);
     private static final Field<BigDecimal> PRICE = field("price", BigDecimal.class);
+
+
+    public List<Product> findAll() {
+    return dsl.select(ID, CATEGORY_ID, NAME, PRICE)
+              .from(PRODUCTS)
+              .fetch(r -> new Product(
+                r.get(ID),
+                r.get(CATEGORY_ID),
+                r.get(NAME),
+                r.get(PRICE)
+              ));    
+    }
 }
