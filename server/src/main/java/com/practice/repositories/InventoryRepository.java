@@ -50,4 +50,12 @@ public class InventoryRepository {
                              .execute();
         return updatedRows > 0;
     }
+
+    // delete an inventory item
+    public boolean deleteInventory(int id) {
+        int deleted = dsl.deleteFrom(INVENTORY)
+                         .where(ID.eq(id))
+                         .execute();
+        return deleted > 0;
+    }
 }
