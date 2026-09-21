@@ -3,12 +3,16 @@ package com.practice.config;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import io.github.cdimascio.dotenv.Dotenv;
+import org.jooq.DSLContext;
+import org.jooq.SQLDialect;
+import org.jooq.impl.DSL;
 
 import javax.sql.DataSource;
 
 public class DatabaseConfig {
 
     private static volatile HikariDataSource dataSource;
+    private static volatile DSLContext dslContext;
     
     private static final Dotenv dotenv = Dotenv.configure()
             .ignoreIfMissing()
@@ -44,6 +48,17 @@ public class DatabaseConfig {
             }
         }
         return dataSource;
+    }
+
+    public static DSLContext getDSLContext() {
+        if (dslContext == null) {
+            synchronized (DatabaseConfig.class) {
+                if (dslContext == null) {
+                    dslContext = DSL.using(getDataSource(), SQLDialect.DEFAULT);
+                }
+            }
+        }
+        return dslContext;
     }
 
     public static void shutdown() {
