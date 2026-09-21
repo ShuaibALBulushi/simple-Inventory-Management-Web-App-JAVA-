@@ -46,4 +46,16 @@ public class ProductRepository {
                   .returningResult(ID)
                   .fetchOneInto(Integer.class);
     }
+
+    // update a product
+    public boolean updateProduct(Product product){
+        int updatedRows = dsl.update(PRODUCTS)
+                             .set(CATEGORY_ID, product.categoryId())
+                             .set(NAME, product.name())
+                             .set(PRICE, product.price())
+                             .where(ID.eq(product.id()))
+                             .execute();
+        return updatedRows > 0;
+
+    }
 }
