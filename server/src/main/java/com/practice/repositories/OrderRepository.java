@@ -49,4 +49,12 @@ public class OrderRepository {
                              .execute();
         return updatedRows > 0;
     }
+
+    // delete an order
+    public boolean deleteOrder(int id) {
+        int deleted = dsl.deleteFrom(ORDERS)
+                         .where(ID.eq(id))
+                         .execute();
+        return deleted > 0;
+    }
 }
