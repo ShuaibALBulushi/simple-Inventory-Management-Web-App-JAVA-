@@ -30,4 +30,13 @@ public class CategoryRepository {
                     c.get(NAME)
                   ));
     }
+
+    // add a new category
+    public Integer addCategory(Category category){
+        return dsl.insertInto(CATEGORIES)
+                  .columns(NAME)
+                  .values(category.name())
+                  .returningResult(ID)
+                  .fetchOneInto(Integer.class);
+    }
 }
