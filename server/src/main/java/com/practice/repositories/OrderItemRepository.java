@@ -36,4 +36,13 @@ public class OrderItemRepository {
                       r.get(UNIT_PRICE)
                   ));
     }
+
+    // add a new order item
+    public Integer addOrderItem(OrderItem item) {
+        return dsl.insertInto(ORDER_ITEMS)
+                  .columns(ORDER_ID, PRODUCT_ID, QUANTITY, UNIT_PRICE)
+                  .values(item.orderId(), item.productId(), item.quantity(), item.unitPrice())
+                  .returningResult(ID)
+                  .fetchOneInto(Integer.class);
+    }
 }
