@@ -45,4 +45,16 @@ public class OrderItemRepository {
                   .returningResult(ID)
                   .fetchOneInto(Integer.class);
     }
+
+    // update an order item
+    public boolean updateOrderItem(OrderItem item) {
+        int updatedRows = dsl.update(ORDER_ITEMS)
+                             .set(ORDER_ID, item.orderId())
+                             .set(PRODUCT_ID, item.productId())
+                             .set(QUANTITY, item.quantity())
+                             .set(UNIT_PRICE, item.unitPrice())
+                             .where(ID.eq(item.id()))
+                             .execute();
+        return updatedRows > 0;
+    }
 }
