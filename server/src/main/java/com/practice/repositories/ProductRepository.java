@@ -26,6 +26,7 @@ public class ProductRepository {
     private static final Field<BigDecimal> PRICE = field("price", BigDecimal.class);
 
 
+    // find all products
     public List<Product> findAll() {
     return dsl.select(ID, CATEGORY_ID, NAME, PRICE)
               .from(PRODUCTS)
@@ -35,5 +36,14 @@ public class ProductRepository {
                 r.get(NAME),
                 r.get(PRICE)
               ));    
+    }
+
+    // add a new product
+    public Integer addProduct(Product product){
+        return dsl.insertInto(PRODUCTS)
+                  .columns(CATEGORY_ID, NAME, PRICE)
+                  .values(product.categoryId(), product.name(), product.price())
+                  .returningResult(ID)
+                  .fetchOneInto(Integer.class);
     }
 }
