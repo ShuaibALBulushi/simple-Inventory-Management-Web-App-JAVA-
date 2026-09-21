@@ -7,7 +7,6 @@ import org.jooq.Record;
 import org.jooq.Table;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 import static org.jooq.impl.DSL.*;
 
 public class ProductRepository {
