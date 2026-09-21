@@ -48,4 +48,12 @@ public class CategoryRepository {
                          .execute();
         return updated > 0;
     }
+
+    // delete a category
+    public boolean deleteCategory(int id){
+        int deleted = dsl.deleteFrom(CATEGORIES)
+                         .where(ID.eq(id))
+                         .execute();
+        return deleted > 0;
+    }
 }
