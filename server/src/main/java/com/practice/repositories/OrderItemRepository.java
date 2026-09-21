@@ -57,4 +57,12 @@ public class OrderItemRepository {
                              .execute();
         return updatedRows > 0;
     }
+
+    // delete an order item
+    public boolean deleteOrderItem(int id) {
+        int deleted = dsl.deleteFrom(ORDER_ITEMS)
+                         .where(ID.eq(id))
+                         .execute();
+        return deleted > 0;
+    }
 }
