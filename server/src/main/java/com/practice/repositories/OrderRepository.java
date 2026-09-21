@@ -31,4 +31,13 @@ public class OrderRepository {
                       r.get(STATUS)
                   ));
     }
+
+    // add a new order
+    public Integer addOrder(Order order) {
+        return dsl.insertInto(ORDERS)
+                  .columns(STATUS)
+                  .values(order.status() != null ? order.status() : "PENDING")
+                  .returningResult(ID)
+                  .fetchOneInto(Integer.class);
+    }
 }
