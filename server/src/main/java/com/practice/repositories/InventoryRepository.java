@@ -20,4 +20,15 @@ public class InventoryRepository {
     private static final Field<Integer> ID = field("id", Integer.class);
     private static final Field<Integer> PRODUCT_ID = field("product_id", Integer.class);
     private static final Field<Integer> QUANTITY = field("quantity", Integer.class);
+
+    // find all inventory items
+    public List<Inventory> findAll() {
+        return dsl.select(ID, PRODUCT_ID, QUANTITY)
+                  .from(INVENTORY)
+                  .fetch(i -> new Inventory(
+                      i.get(ID),
+                      i.get(PRODUCT_ID),
+                      i.get(QUANTITY)
+                  ));
+    }
 }
