@@ -39,11 +39,10 @@ public class OrderItemRepository {
 
     // add a new order item
     public Integer addOrderItem(OrderItem item) {
-        return dsl.insertInto(ORDER_ITEMS)
-                  .columns(ORDER_ID, PRODUCT_ID, QUANTITY, UNIT_PRICE)
-                  .values(item.orderId(), item.productId(), item.quantity(), item.unitPrice())
-                  .returningResult(ID)
-                  .fetchOneInto(Integer.class);
+        return dsl.resultQuery(
+        "INSERT INTO order_items (order_id, product_id, quantity, unit_price) OUTPUT inserted.id VALUES (?, ?, ?, ?)",
+        item.orderId(), item.productId(), item.quantity(), item.unitPrice()
+        ).fetchOneInto(Integer.class);
     }
 
     // update an order item

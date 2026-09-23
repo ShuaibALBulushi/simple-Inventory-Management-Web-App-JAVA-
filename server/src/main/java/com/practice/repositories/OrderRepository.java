@@ -34,11 +34,10 @@ public class OrderRepository {
 
     // add a new order
     public Integer addOrder(Order order) {
-        return dsl.insertInto(ORDERS)
-                  .columns(STATUS)
-                  .values(order.status() != null ? order.status() : "PENDING")
-                  .returningResult(ID)
-                  .fetchOneInto(Integer.class);
+        return dsl.resultQuery(
+        "INSERT INTO orders (status) OUTPUT inserted.id VALUES (?)",
+        order.status()
+        ).fetchOneInto(Integer.class);
     }
 
     // update an order
