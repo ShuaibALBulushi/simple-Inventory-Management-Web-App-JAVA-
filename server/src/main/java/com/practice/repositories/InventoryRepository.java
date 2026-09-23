@@ -34,11 +34,10 @@ public class InventoryRepository {
 
     // add a new inventory item
     public Integer addInventory(Inventory inventory) {
-        return dsl.insertInto(INVENTORY)
-                  .columns(PRODUCT_ID, QUANTITY)
-                  .values(inventory.productId(), inventory.quantity())
-                  .returningResult(ID)
-                  .fetchOneInto(Integer.class);
+        return dsl.resultQuery(
+        "INSERT INTO inventory (product_id, quantity) OUTPUT inserted.id VALUES (?, ?)",
+        inventory.productId(), inventory.quantity()
+        ).fetchOneInto(Integer.class);
     }
 
     // update an inventory item
