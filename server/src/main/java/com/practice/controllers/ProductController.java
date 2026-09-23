@@ -19,4 +19,13 @@ public class ProductController {
     public void getAll(Context ctx) {
         ctx.json(productRepository.findAll());
     }
+
+    // add a new product
+    public void create(Context ctx) {
+        CreateProductDto dto = ctx.bodyAsClass(CreateProductDto.class);
+        Product product = new Product(null, dto.categoryId(), dto.name(), dto.price());
+        
+        Integer id = productRepository.addProduct(product);
+        ctx.status(HttpStatus.CREATED).json(id);
+    }
 }
