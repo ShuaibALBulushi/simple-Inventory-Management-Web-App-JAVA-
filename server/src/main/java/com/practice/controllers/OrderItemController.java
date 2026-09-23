@@ -27,4 +27,18 @@ public class OrderItemController {
         Integer id = orderItemRepository.addOrderItem(item);
         ctx.status(HttpStatus.CREATED).json(id);
     }
+
+    // update an order item
+    public void update(Context ctx) {
+        int id = ctx.pathParamAsClass("id", Integer.class).get();
+        CreateOrderItemDto dto = ctx.bodyAsClass(CreateOrderItemDto.class);
+        OrderItem item = new OrderItem(id, dto.orderId(), dto.productId(), dto.quantity(), dto.unitPrice());
+
+        boolean updated = orderItemRepository.updateOrderItem(item);
+        if (updated) {
+            ctx.status(HttpStatus.NO_CONTENT);
+        } else {
+            ctx.status(HttpStatus.NOT_FOUND).result("Order item not found");
+        }
+    }
 }
