@@ -41,4 +41,16 @@ public class OrderItemController {
             ctx.status(HttpStatus.NOT_FOUND).result("Order item not found");
         }
     }
+
+    // delete an order item
+    public void delete(Context ctx) {
+        int id = ctx.pathParamAsClass("id", Integer.class).get();
+        boolean deleted = orderItemRepository.deleteOrderItem(id);
+        
+        if (deleted) {
+            ctx.status(HttpStatus.NO_CONTENT);
+        } else {
+            ctx.status(HttpStatus.NOT_FOUND).result("Order item not found");
+        }
+    }
 }
