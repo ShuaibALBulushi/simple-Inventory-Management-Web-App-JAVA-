@@ -41,4 +41,16 @@ public class InventoryController {
             ctx.status(HttpStatus.NOT_FOUND).result("Inventory record not found");
         }
     }
+
+    // delete an inventory item
+    public void delete(Context ctx) {
+        int id = ctx.pathParamAsClass("id", Integer.class).get();
+        boolean deleted = inventoryRepository.deleteInventory(id);
+        
+        if (deleted) {
+            ctx.status(HttpStatus.NO_CONTENT);
+        } else {
+            ctx.status(HttpStatus.NOT_FOUND).result("Inventory record not found");
+        }
+    }
 }
