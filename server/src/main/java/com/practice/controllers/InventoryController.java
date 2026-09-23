@@ -27,4 +27,18 @@ public class InventoryController {
         Integer id = inventoryRepository.addInventory(inventory);
         ctx.status(HttpStatus.CREATED).json(id);
     }
+
+    // update an inventory item
+    public void update(Context ctx) {
+        int id = ctx.pathParamAsClass("id", Integer.class).get();
+        CreateInventoryDto dto = ctx.bodyAsClass(CreateInventoryDto.class);
+        Inventory inventory = new Inventory(id, dto.productId(), dto.quantity());
+
+        boolean updated = inventoryRepository.updateInventory(inventory);
+        if (updated) {
+            ctx.status(HttpStatus.NO_CONTENT);
+        } else {
+            ctx.status(HttpStatus.NOT_FOUND).result("Inventory record not found");
+        }
+    }
 }
