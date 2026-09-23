@@ -13,5 +13,10 @@ public class CategoryController {
     public CategoryController(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }
-    
+
+
+    // find all categories
+    public void getAll(Context ctx) {
+        ctx.json(categoryRepository.findAll());
+    }
 }
