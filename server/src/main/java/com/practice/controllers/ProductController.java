@@ -13,5 +13,10 @@ public class ProductController {
     public ProductController(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
-    
+
+
+    // get all products
+    public void getAll(Context ctx) {
+        ctx.json(productRepository.findAll());
+    }
 }
