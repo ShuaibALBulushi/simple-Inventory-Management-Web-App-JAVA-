@@ -18,4 +18,13 @@ public class InventoryController {
     public void getAll(Context ctx) {
         ctx.json(inventoryRepository.findAll());
     }
+
+    // add a new inventory item
+    public void create(Context ctx) {
+        CreateInventoryDto dto = ctx.bodyAsClass(CreateInventoryDto.class);
+        Inventory inventory = new Inventory(null, dto.productId(), dto.quantity());
+        
+        Integer id = inventoryRepository.addInventory(inventory);
+        ctx.status(HttpStatus.CREATED).json(id);
+    }
 }
