@@ -39,11 +39,10 @@ public class ProductRepository {
 
     // add a new product
     public Integer addProduct(Product product){
-        return dsl.insertInto(PRODUCTS)
-                  .columns(CATEGORY_ID, NAME, PRICE)
-                  .values(product.categoryId(), product.name(), product.price())
-                  .returningResult(ID)
-                  .fetchOneInto(Integer.class);
+        return dsl.resultQuery(
+        "INSERT INTO products (category_id, name, price) OUTPUT inserted.id VALUES (?, ?, ?)",
+        product.categoryId(), product.name(), product.price()
+        ).fetchOneInto(Integer.class);
     }
 
     // update a product
