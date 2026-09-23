@@ -27,4 +27,18 @@ public class OrderController {
         Integer id = orderRepository.addOrder(order);
         ctx.status(HttpStatus.CREATED).json(id);
     }
+
+    // update an order
+    public void update(Context ctx) {
+        int id = ctx.pathParamAsClass("id", Integer.class).get();
+        CreateOrderDto dto = ctx.bodyAsClass(CreateOrderDto.class);
+        Order order = new Order(id, null, dto.status());
+
+        boolean updated = orderRepository.updateOrder(order);
+        if (updated) {
+            ctx.status(HttpStatus.NO_CONTENT);
+        } else {
+            ctx.status(HttpStatus.NOT_FOUND).result("Order not found");
+        }
+    }
 }
