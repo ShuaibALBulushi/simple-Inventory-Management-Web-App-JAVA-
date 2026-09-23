@@ -1,4 +1,4 @@
-package com.practice.dto;
+package com.practice.dtos;
 
 public record CreateCategoryDto (
     String name
