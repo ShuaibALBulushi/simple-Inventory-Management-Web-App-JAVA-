@@ -45,4 +45,17 @@ public class CategoryController {
             ctx.status(HttpStatus.NOT_FOUND).json("Category not found");
         }
     }
+
+    // delete a category
+    public void delete(Context ctx){
+
+        int id = ctx.pathParamAsClass("id", Integer.class).get();
+        boolean deleted = categoryRepository.deleteCategory(id);
+        if(deleted){
+            ctx.status(HttpStatus.OK).json("Category deleted successfully");
+        }
+        else{
+            ctx.status(HttpStatus.NOT_FOUND).json("Category not found");
+        }
+    }
 }
