@@ -33,11 +33,10 @@ public class CategoryRepository {
 
     // add a new category
     public Integer addCategory(Category category){
-        return dsl.insertInto(CATEGORIES)
-                  .columns(NAME)
-                  .values(category.name())
-                  .returningResult(ID)
-                  .fetchOneInto(Integer.class);
+        return dsl.resultQuery(
+        "INSERT INTO categories (name) OUTPUT inserted.id VALUES (?)",
+        category.name()
+        ).fetchOneInto(Integer.class);
     }
 
     // update a category
