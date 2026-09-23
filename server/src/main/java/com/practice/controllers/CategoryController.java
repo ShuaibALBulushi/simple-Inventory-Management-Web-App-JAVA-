@@ -19,4 +19,14 @@ public class CategoryController {
     public void getAll(Context ctx) {
         ctx.json(categoryRepository.findAll());
     }
+
+    // add a new category
+    public void create(Context ctx){
+        
+        CreateCategoryDto dto = ctx.bodyAsClass(CreateCategoryDto.class);
+        Category category = new Category(null, dto.name());
+
+        Integer id = categoryRepository.addCategory(category);
+        ctx.status(HttpStatus.CREATED).json(id);
+    }
 }
