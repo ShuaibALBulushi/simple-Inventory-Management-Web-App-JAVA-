@@ -42,4 +42,16 @@ public class ProductController {
             ctx.status(HttpStatus.NOT_FOUND).result("Product not found");
         }
     }
+
+    // delete a product
+    public void delete(Context ctx) {
+        int id = ctx.pathParamAsClass("id", Integer.class).get();
+        boolean deleted = productRepository.deleteProduct(id);
+        
+        if (deleted) {
+            ctx.status(HttpStatus.NO_CONTENT);
+        } else {
+            ctx.status(HttpStatus.NOT_FOUND).result("Product not found");
+        }
+    }
 }
