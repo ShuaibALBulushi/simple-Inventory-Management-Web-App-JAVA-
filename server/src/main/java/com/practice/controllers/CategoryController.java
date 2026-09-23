@@ -22,11 +22,27 @@ public class CategoryController {
 
     // add a new category
     public void create(Context ctx){
-        
+
         CreateCategoryDto dto = ctx.bodyAsClass(CreateCategoryDto.class);
         Category category = new Category(null, dto.name());
 
         Integer id = categoryRepository.addCategory(category);
         ctx.status(HttpStatus.CREATED).json(id);
+    }
+
+    // update a category
+    public void update(Context ctx){
+
+        int id = ctx.pathParamAsClass("id", Integer.class).get();
+        CreateCategoryDto dto = ctx.bodyAsClass(CreateCategoryDto.class);
+        Category category = new Category(id, dto.name());
+
+        boolean updated = categoryRepository.updateCategory(category);
+        if(updated){
+            ctx.status(HttpStatus.OK).json("Category updated successfully");
+        }
+        else{
+            ctx.status(HttpStatus.NOT_FOUND).json("Category not found");
+        }
     }
 }
