@@ -18,4 +18,13 @@ public class OrderItemController {
     public void getAll(Context ctx) {
         ctx.json(orderItemRepository.findAll());
     }
+
+    // add a new order item
+    public void create(Context ctx) {
+        CreateOrderItemDto dto = ctx.bodyAsClass(CreateOrderItemDto.class);
+        OrderItem item = new OrderItem(null, dto.orderId(), dto.productId(), dto.quantity(), dto.unitPrice());
+        
+        Integer id = orderItemRepository.addOrderItem(item);
+        ctx.status(HttpStatus.CREATED).json(id);
+    }
 }
